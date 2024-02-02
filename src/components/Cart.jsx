@@ -4,6 +4,7 @@ import CartItem from "./CartItem";
 import Button from "../util/Button";
 import MealItem from "./MealItem";
 import DUMMY_MEALS from "../util/dummyMeals";
+import ModalActions from "../util/ModalActions";
 
 const MEAL = {
   id: DUMMY_MEALS[0].id,
@@ -87,10 +88,11 @@ export default function Cart() {
         />
       ))}
       <p className="cart-total">$73.56</p>
-      <div className="modal-actions">
+      <ModalActions declineBtn="Close" submitBtn="Go to Checkout"/>
+      {/* <div className="modal-actions">
         <button className="text-button">Close</button>
         <Button onClick={() => handleAddToCart(MEAL)}>Go to Checkout</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

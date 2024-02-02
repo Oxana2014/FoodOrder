@@ -1,3 +1,5 @@
+import ModalActions from "../util/ModalActions";
+
 export default function OrderForm() {
   return (
     <form>
@@ -26,10 +28,11 @@ export default function OrderForm() {
         </div>
       </div>
       <div className="cart-item-actions">
-        <div className="modal-actions">
+        <ModalActions declineBtn="Close" submitBtn="Submit Order" />
+        {/* <div className="modal-actions">
           <button className="text-button">Close</button>
           <button>Submit Order</button>
-        </div>
+        </div> */}
       </div>
     </form>
   );
