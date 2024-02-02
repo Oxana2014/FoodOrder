@@ -1,7 +1,6 @@
 export default function OrderForm() {
   return (
     <form>
-      <div ></div>
       <h3>Checkout</h3>
       <p>TotalAmount $100</p>
       <div className="control">
