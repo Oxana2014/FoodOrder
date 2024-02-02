@@ -3,13 +3,17 @@ import Meals from "./components/Meals";
 import Cart from "./components/Cart";
 import OrderForm from "./components/OrderForm";
 import Feedback from "./components/Feedback";
+import Modal from "./util/Modal";
 
 function App() {
   return (
     <>
       {/* <MainHeader /> 
        <Meals /> */}
-      <Cart />
+       <Modal>
+        <Cart />
+       </Modal>
+      
       {/* <OrderForm /> */}
       {/* <Feedback /> */}
     </>

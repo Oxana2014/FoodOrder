@@ -1,5 +1,5 @@
 import logo from "../assets/logo.jpg";
-import Button from "./Button";
+import Button from "../util/Button";
 
 export default function MainHeader() {
   return (
