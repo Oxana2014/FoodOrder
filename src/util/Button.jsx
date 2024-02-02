@@ -1,5 +1,5 @@
-export default function Button ({children}) {
-    return <button className="button" type="submit">
+export default function Button ({children, ...props}) {
+    return <button className="button" type="submit" {...props}>
 {children}
     </button>
 }

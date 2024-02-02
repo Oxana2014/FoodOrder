@@ -1,12 +1,17 @@
-export default function CartItem() {
-    return   <ul>
-    <li className="cart-item">
-        <p>Seafood paella - 2 X $19.99</p>
+export default function CartItem({ name, price, quantity }) {
+  console.log("new cartItem: ", name, price, quantity);
+  return (
+    <ul>
+      <li className="cart-item">
+        <p>
+          {name} - {quantity} X ${price}
+        </p>
         <div className="cart-item-actions">
-            <button>-</button>
-            <p>2</p>
-            <button>+</button>
+          <button>-</button>
+          <p>{quantity}</p>
+          <button>+</button>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
+  );
 }
