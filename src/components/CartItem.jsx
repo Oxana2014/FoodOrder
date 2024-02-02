@@ -1,4 +1,4 @@
-export default function CartItem({ name, price, quantity }) {
+export default function CartItem({id, name, price, quantity, onIncrement, onDecrement }) {
   console.log("new cartItem: ", name, price, quantity);
   return (
     <ul>
@@ -7,9 +7,9 @@ export default function CartItem({ name, price, quantity }) {
           {name} - {quantity} X ${price}
         </p>
         <div className="cart-item-actions">
-          <button>-</button>
+          <button onClick={() => onDecrement(id)}>-</button>
           <p>{quantity}</p>
-          <button>+</button>
+          <button onClick={() => onIncrement(id)}>+</button>
         </div>
       </li>
     </ul>

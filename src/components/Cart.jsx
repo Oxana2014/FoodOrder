@@ -9,26 +9,66 @@ const MEAL = {
   id: DUMMY_MEALS[0].id,
   name: DUMMY_MEALS[0].name,
   price: DUMMY_MEALS[0].price,
-  quantity: 1
+  quantity: 1,
 };
-console.log("MEAL: ", MEAL)
+console.log("MEAL: ", MEAL);
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([{
+    id: DUMMY_MEALS[1].id,
+    name: DUMMY_MEALS[1].name,
+    price: DUMMY_MEALS[1].price,
+    quantity: 1,
+  },
+  {
+    id: DUMMY_MEALS[2].id,
+    name: DUMMY_MEALS[2].name,
+    price: DUMMY_MEALS[2].price,
+    quantity: 1,
+  }]);
 
   function handleAddToCart(meal) {
     console.log("cartItems: ", cartItems);
     setCartItems((prevCartItems) => {
-      const updatedItems = [...prevCartItems]
-      const index = updatedItems.findIndex((item) => meal.id ===item.id);
-      console.log("index: ", index)
+      const updatedItems = [...prevCartItems];
+      const index = updatedItems.findIndex((item) => meal.id === item.id);
+      console.log("index: ", index);
       if (index !== -1) {
-        updatedItems[index].quantity =  updatedItems[index].quantity +1;
-        console.log("prevCartItems: ", updatedItems)
+        updatedItems[index].quantity = updatedItems[index].quantity + 1;
+        console.log("prevCartItems: ", updatedItems);
         return updatedItems;
       } else {
-      return [...updatedItems, meal];
+        return [...updatedItems, meal];
       }
+    });
+  }
+
+  function handleIncrement(itemId) {
+    setCartItems((prevCartItems) => {
+      const updatedItems = [...prevCartItems];
+      const index = updatedItems.findIndex((item) => item.id === itemId);
+      console.log("index: ", index);
+
+      updatedItems[index].quantity = updatedItems[index].quantity + 1;
+      console.log("prevCartItems: ", updatedItems);
+      return updatedItems;
+    });
+  }
+  function handleDecrement(itemId) {
+    setCartItems((prevCartItems) => {
+      const updatedItems = [...prevCartItems];
+      const index = updatedItems.findIndex((item) => item.id === itemId);
+      console.log("index: ", index);
+
+      const updatedQuantity = updatedItems[index].quantity - 1;
+      if (updatedQuantity < 1) {
+        updatedItems.splice(index, 1);
+      }else {
+        updatedItems[index].quantity  = updatedQuantity
+      }
+
+      console.log("prevCartItems: ", updatedItems);
+      return updatedItems;
     });
   }
 
@@ -38,9 +78,12 @@ export default function Cart() {
       {cartItems.map((cartItem) => (
         <CartItem
           key={cartItem.id}
+          id={cartItem.id}
           name={cartItem.name}
           price={cartItem.price}
           quantity={cartItem.quantity}
+          onIncrement={handleIncrement}
+          onDecrement={handleDecrement}
         />
       ))}
       <p className="cart-total">$73.56</p>
