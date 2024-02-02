@@ -7,11 +7,11 @@ import Feedback from "./components/Feedback";
 function App() {
   return (
     <>
-      {/* <MainHeader /> */}
-      {/* <Meals /> */}
-      {/* <Cart /> */}
+      {/* <MainHeader /> 
+       <Meals /> */}
+      <Cart />
       {/* <OrderForm /> */}
-      <Feedback />
+      {/* <Feedback /> */}
     </>
   );
 }

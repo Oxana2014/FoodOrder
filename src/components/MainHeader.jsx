@@ -1,4 +1,5 @@
 import logo from "../assets/logo.jpg";
+import Button from "./Button";
 
 export default function MainHeader() {
   return (
@@ -8,7 +9,7 @@ export default function MainHeader() {
  </div>
         <h1>Food Order App</h1>
         
-        <button>Cart</button>
+        <Button>Cart</Button>
     </div>
   );
 }

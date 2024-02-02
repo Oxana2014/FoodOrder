@@ -1,4 +1,5 @@
 import CartItem from "./CartItem"
+import Button from './Button'
 
 export default function Cart () {
     return <dialog open >
@@ -10,7 +11,7 @@ export default function Cart () {
     <p className="cart-total">$73.56</p>
     <div className="modal-actions">
         <button className="text-button">Close</button>
-        <button>Go to Checkout</button>
+        <Button>Go to Checkout</Button>
     </div>
     </div>
     </dialog>
