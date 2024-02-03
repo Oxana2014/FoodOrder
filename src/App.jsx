@@ -19,10 +19,10 @@ function App() {
       {availableMeals.length !== 0 && <Meals meals={availableMeals}/>}
       
     
-        {/* <Cart /> */}
+        <Cart />
     {/* <Feedback /> */}
       
-      <OrderForm />
+      {/* <OrderForm /> */}
   
     </>
   );

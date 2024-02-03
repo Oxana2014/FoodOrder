@@ -15,6 +15,7 @@ const MEAL = {
 console.log("MEAL: ", MEAL);
 
 export default function Cart() {
+
   const [cartItems, setCartItems] = useState([{
     id: DUMMY_MEALS[1].id,
     name: DUMMY_MEALS[1].name,
@@ -27,6 +28,8 @@ export default function Cart() {
     price: DUMMY_MEALS[2].price,
     quantity: 1,
   }]);
+
+  const cartTotal = cartItems.reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
 
   function handleAddToCart(meal) {
     console.log("cartItems: ", cartItems);
@@ -88,7 +91,7 @@ export default function Cart() {
           onDecrement={handleDecrement}
         />
       ))}
-      <p className="cart-total">$73.56</p>
+      <p className="cart-total">${cartTotal}</p>
   
       {/* <div className="modal-actions">
         <button className="text-button">Close</button>
