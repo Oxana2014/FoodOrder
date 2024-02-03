@@ -18,12 +18,12 @@ function App() {
       {availableMeals.length === 0 && <p>Sorry, Meals are not available now</p>}
       {availableMeals.length !== 0 && <Meals meals={availableMeals}/>}
       
-       {/* <Modal>
-        <Cart />
-       </Modal> */}
+    
+        {/* <Cart /> */}
+    {/* <Feedback /> */}
       
-      {/* <OrderForm /> */}
-     <Modal><Feedback /></Modal> 
+      <OrderForm />
+  
     </>
   );
 }

@@ -1,8 +1,8 @@
-import ModalActions from "../util/ModalActions";
+import Modal from "../util/Modal";
 
 export default function Feedback() {
   return (
-  
+    <Modal declineBtn={null} submitBtn="Okay" >
       <div >
         <h3>Success!</h3>
         <p>Your order was submitted successfully</p>
@@ -10,11 +10,7 @@ export default function Feedback() {
           We will get back to you with more details via email within the next
           few minutes
         </p>
-<ModalActions declineBtn={null} submitBtn="Okay" />
-        {/* <div className="modal-actions">
-          <button>Okay</button>
-        </div> */}
       </div>
- 
+ </Modal>
   );
 }
