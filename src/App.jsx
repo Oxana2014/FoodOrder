@@ -8,23 +8,32 @@ import Feedback from "./components/Feedback";
 import CartContextProvider, { CartContext } from "./store/cart-context";
 import { useContext } from "react";
 import { useEffect } from "react";
+import Error from './components/Error'
 
 function App() {
   const [availableMeals, setAvailableMeals] = useState([]);
   const [appState, setAppState] = useState(null);
+ let errorMessage = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, beatae? Dignissimos rerum architecto odio libero ea nostrum eaque odit incidunt voluptatibus fugiat nam distinctio nihil molestiae, iusto, error repellat? Quas."
 
   useEffect(() => {
   async function fetchMeals() {
     try {
-      const response = await fetch("http://localhost:3000/meals");
+      const response = await fetch("http://localhost:3000/meal");
       const responseData = await response.json();
 
-      if (!response.ok) {
-        throw new Error("Can't fetch meals");
+      // if (!response.ok) {
+      //   throw new Error("Can't fetch meals");
+      // }
+      if(response.ok) {
+        setAvailableMeals(responseData);
       }
-      setAvailableMeals(responseData);
+      else {
+        handleError("Sorry, can not fetch meals");
+      }
+      
     } catch (error) {
-      handleError(error);
+      setAvailableMeals([])
+      handleError(error.message);
     }
   }
   fetchMeals()
@@ -67,7 +76,9 @@ function App() {
         />
       )}
 
-      {/* {appState === 'error' && <Error /> } */}
+      {appState === 'error' && <Error 
+       message={errorMessage} onSubmit={() => updateAppState(null)}/> } 
+
     </CartContextProvider>
   );
 }
