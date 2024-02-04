@@ -36,6 +36,7 @@ export default function CartContextProvider({ children }) {
       quantity: 1,
     },
   ]);
+ 
 
   const ctxValue = {
     items: cartItems,
@@ -43,6 +44,9 @@ export default function CartContextProvider({ children }) {
     increment: handleIncrement,
     decrement: handleDecrement,
   };
+
+
+  
 
   function handleAddToCart(meal) {
     console.log("meal: ", meal)
@@ -91,7 +95,8 @@ export default function CartContextProvider({ children }) {
     });
   }
 
+
   return (
-    <CartContext.Provider value={ctxValue}>{children}</CartContext.Provider>
+    <CartContext.Provider  value={ctxValue}>{children}</CartContext.Provider>
   );
 }
