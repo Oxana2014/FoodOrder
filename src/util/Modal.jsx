@@ -5,8 +5,8 @@ import Button from "./Button";
 export default function Modal({ children, declineBtn, submitBtn }) {
 const dialog = useRef()
 
-useEffect(() => {if(dialog.current) dialog.current.showModal()})
-// 
+useEffect(() => {if(dialog.current) dialog.current.showModal()},[])
+ 
 
 function handleClose() {
   dialog.current.close()
