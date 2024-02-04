@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 
 import Button from "./Button";
 
-function Modal({ children, declineBtn, submitBtn, submitFn, closeFn }) {
+function Modal({ children, declineBtn, submitBtn, submitFn, closeFn, submitDisabled }) {
 const dialog = useRef()
 
 useEffect(() => {if(dialog.current) dialog.current.showModal()},[])
@@ -20,7 +20,7 @@ closeFn()
       {children}
       <div className="modal-actions">
   {declineBtn && <button onClick={handleClose} className="text-button">{declineBtn}</button>}
-    <Button onClick={handleSubmit}>{submitBtn}</Button>
+    <Button onClick={handleSubmit} disabled={submitDisabled}>{submitBtn}</Button>
   </div>
     </dialog>
   );

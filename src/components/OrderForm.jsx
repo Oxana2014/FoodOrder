@@ -1,11 +1,25 @@
+import { useContext } from "react";
 import Modal from "../util/Modal";
+import { CartContext } from "../store/cart-context";
+import { useState } from "react";
 
 export default function OrderForm({
   closeOrder,
   onErrorAfterSubmit,
   submitOrder,
 }) {
-  function onSubmit() {
+
+const {items: mealsInOrder} = useContext(CartContext)
+const [data, setData] = useState({name: '', email: "", street: "", ['postal-code']: "", city: ""})
+
+const dataIsReady =  data.name && data.email && data.street && data['postal-code'] && data.city
+const totalPrice = mealsInOrder.reduce((acc, meal) => acc + meal.price * meal.quantity, 0)
+
+function handleChange(input, value) {
+  setData((prevData) =>({...prevData, [input]: value }) )
+}
+
+function onSubmit() {
     console.log("Send http request");
     console.log("Receive response");
     //if (!responce.ok)
@@ -21,30 +35,31 @@ export default function OrderForm({
       submitBtn="Submit Order"
       closeFn={closeOrder}
       submitFn={onSubmit}
+      submitDisabled={!dataIsReady}
     >
-      <form>
+      <form >
         <h3>Checkout</h3>
-        <p>TotalAmount $100</p>
+        <p>TotalAmount ${totalPrice}</p>
         <div className="control">
-          <label>Full Name</label>
-          <input type="text" id="name" name="name" />
+          <label htmlFor="name">Full Name</label>
+          <input onChange={(event) => handleChange('name', event.target.value)} value={data.name} type="text" id="name" name="name" required/>
         </div>
         <div className="control">
-          <label>E_Mail Address</label>
-          <input type="email" id="email" name="email" />
+          <label htmlFor="email">E_Mail Address</label>
+          <input  onChange={(event) => handleChange('email', event.target.value)} value={data.email} type="email" id="email" name="email" required/>
         </div>
         <div className="control">
-          <label>Street</label>
-          <input type="text" id="street" name="street" />
+          <label htmlFor="street">Street</label>
+          <input  onChange={(event) => handleChange('street', event.target.value)}  value={data.street} type="text" id="street" name="street" required/>
         </div>
         <div className="control-row">
           <div className="control">
-            <label>Postal Code</label>
-            <input type="text" id="postal-code" name="postal-code" />
+            <label htmlFor="postal-code">Postal Code</label>
+            <input  onChange={(event) => handleChange('postal-code', event.target.value)}  value={data["postal-code"]} type="text" id="postal-code" name="postal-code" required/>
           </div>
           <div className="control">
-            <label>City</label>
-            <input type="text" id="city" name="city" />
+            <label htmlFor="city">City</label>
+            <input  onChange={(event) => handleChange('city', event.target.value)} value={data.city} type="text" id="city" name="city" required/>
           </div>
         </div>
       </form>
