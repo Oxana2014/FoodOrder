@@ -19,6 +19,10 @@ function App() {
     console.log("updateAppState(): ", newState);
     setAppState(newState);
   }
+  function handleError(errorMessage) {
+    console.log("Error: ", errorMessage);
+    updateAppState("error");
+  }
 
   return (
     <CartContextProvider>
@@ -36,9 +40,17 @@ function App() {
           }}
         />
       )}
-      {appState === "feedback" && <Feedback />}
+      {appState === "feedback" && <Feedback onSubmit={() => updateAppState(null)}/>}
 
-      {appState === "order" && <OrderForm />}
+      {appState === "order" && (
+        <OrderForm
+          closeOrder={() => updateAppState(null)}
+          onErrorAfterSubmit={() => handleError(errorMessage)}
+          submitOrder={() =>updateAppState('feedback')}
+        />
+      )}
+
+      {/* {appState === 'error' && <Error /> } */}
     </CartContextProvider>
   );
 }

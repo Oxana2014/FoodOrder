@@ -1,8 +1,27 @@
 import Modal from "../util/Modal";
 
-export default function OrderForm() {
+export default function OrderForm({
+  closeOrder,
+  onErrorAfterSubmit,
+  submitOrder,
+}) {
+  function onSubmit() {
+    console.log("Send http request");
+    console.log("Receive response");
+    //if (!responce.ok)
+    // throw error
+   // onErrorAfterSubmit("An error occured");
+    //else
+    submitOrder();
+  }
+
   return (
-    <Modal declineBtn="Close" submitBtn="Submit Order">
+    <Modal
+      declineBtn="Close"
+      submitBtn="Submit Order"
+      closeFn={closeOrder}
+      submitFn={onSubmit}
+    >
       <form>
         <h3>Checkout</h3>
         <p>TotalAmount $100</p>
