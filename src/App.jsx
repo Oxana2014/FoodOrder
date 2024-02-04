@@ -5,15 +5,30 @@ import Meals from "./components/Meals";
 import Cart from "./components/Cart";
 import OrderForm from "./components/OrderForm";
 import Feedback from "./components/Feedback";
-import Modal from "./util/Modal";
-import DUMMY_MEALS from "./util/dummyMeals";
 import CartContextProvider, { CartContext } from "./store/cart-context";
 import { useContext } from "react";
 import { useEffect } from "react";
 
 function App() {
-  const [availableMeals, setAvailableMeals] = useState(DUMMY_MEALS);
+  const [availableMeals, setAvailableMeals] = useState([]);
   const [appState, setAppState] = useState(null);
+
+  useEffect(() => {
+  async function fetchMeals() {
+    try {
+      const response = await fetch("http://localhost:3000/meals");
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Can't fetch meals");
+      }
+      setAvailableMeals(responseData);
+    } catch (error) {
+      handleError(error);
+    }
+  }
+  fetchMeals()
+}, [])
 
   function updateAppState(newState) {
     console.log("updateAppState(): ", newState);
@@ -40,13 +55,15 @@ function App() {
           }}
         />
       )}
-      {appState === "feedback" && <Feedback onSubmit={() => updateAppState(null)}/>}
+      {appState === "feedback" && (
+        <Feedback onSubmit={() => updateAppState(null)} />
+      )}
 
       {appState === "order" && (
         <OrderForm
           closeOrder={() => updateAppState(null)}
           onErrorAfterSubmit={() => handleError(errorMessage)}
-          submitOrder={() =>updateAppState('feedback')}
+          submitOrder={() => updateAppState("feedback")}
         />
       )}
 
