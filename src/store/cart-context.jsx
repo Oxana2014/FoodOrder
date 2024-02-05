@@ -2,41 +2,14 @@ import { useState, createContext } from "react";
 import DUMMY_MEALS from "../util/dummyMeals";
 
 export const CartContext = createContext({
-  items: [
-    {
-      id: DUMMY_MEALS[1].id,
-      name: DUMMY_MEALS[1].name,
-      price: DUMMY_MEALS[1].price,
-      quantity: 1,
-    },
-    {
-      id: DUMMY_MEALS[2].id,
-      name: DUMMY_MEALS[2].name,
-      price: DUMMY_MEALS[2].price,
-      quantity: 1,
-    },
-  ],
+  items: [],
   addToCart: () => {},
   increment: () => {},
   decrement: () => {},
 });
 
 export default function CartContextProvider({ children }) {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: DUMMY_MEALS[1].id,
-      name: DUMMY_MEALS[1].name,
-      price: DUMMY_MEALS[1].price,
-      quantity: 1,
-    },
-    {
-      id: DUMMY_MEALS[2].id,
-      name: DUMMY_MEALS[2].name,
-      price: DUMMY_MEALS[2].price,
-      quantity: 1,
-    },
-  ]);
- 
+  const [cartItems, setCartItems] = useState([]);
 
   const ctxValue = {
     items: cartItems,
@@ -44,9 +17,6 @@ export default function CartContextProvider({ children }) {
     increment: handleIncrement,
     decrement: handleDecrement,
   };
-
-
-  
 
   function handleAddToCart(meal) {
     console.log("meal: ", meal)
@@ -56,7 +26,9 @@ export default function CartContextProvider({ children }) {
       const index = updatedItems.findIndex((item) => meal.id === item.id);
       console.log("index: ", index);
       if (index !== -1) {
-        updatedItems[index].quantity++;
+        const existingItem = updatedItems[index]
+        const updatedItem = {...existingItem, quantity : existingItem.quantity+1}
+        updatedItems[index] = updatedItem
         console.log("prevCartItems: ", updatedItems);
         return updatedItems;
       } else {
@@ -70,8 +42,9 @@ export default function CartContextProvider({ children }) {
       const updatedItems = [...prevCartItems];
       const index = updatedItems.findIndex((item) => item.id === itemId);
       console.log("index: ", index);
-
-      updatedItems[index].quantity++;
+const existingItem = updatedItems[index]
+const updatedItem = {...existingItem, quantity: existingItem.quantity+1}
+      updatedItems[index] = updatedItem
       console.log("updatedItems: ", updatedItems);
       return updatedItems;
     });
@@ -87,10 +60,12 @@ export default function CartContextProvider({ children }) {
       if (updatedQuantity < 1) {
         updatedItems.splice(index, 1);
       } else {
-        updatedItems[index].quantity = updatedQuantity;
+        const existingItem = updatedItems[index]
+        const updatedItem  = {...existingItem, quantity : updatedQuantity}
+        updatedItems[index] = updatedItem
       }
 
-      console.log("prevCartItems: ", updatedItems);
+      console.log("updatedItems: ", updatedItems);
       return updatedItems;
     });
   }
