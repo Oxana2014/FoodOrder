@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState, useRef } from "react";
+
 import Modal from "../util/Modal";
 import { CartContext } from "../store/cart-context";
-import { useState } from "react";
 
 export default function OrderForm({
   closeOrder,
@@ -9,37 +9,55 @@ export default function OrderForm({
   submitOrder,
 }) {
   const { items: mealsInOrder } = useContext(CartContext);
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    street: "",
-    ["postal-code"]: "",
-    city: "",
-  });
+  // const [data, setData] = useState({
+  //   name: "",
+  //   email: "",
+  //   street: "",
+  //   ["postal-code"]: "",
+  //   city: "",
+  // });
+  const fullName = useRef();
+  const email = useRef();
+  const street = useRef();
+  const postalCode = useRef();
+  const city = useRef();
 
-  const dataIsReady =
-    data.name && data.email && data.street && data["postal-code"] && data.city;
   const totalPrice = mealsInOrder.reduce(
     (acc, meal) => acc + meal.price * meal.quantity,
     0
   );
 
-  function handleChange(input, value) {
-    setData((prevData) => ({ ...prevData, [input]: value }));
-  }
-
   function onSubmit() {
+    if (
+      fullName.current.value.trim().length === 0 ||
+      email.current.value.trim().length === 0 ||
+      street.current.value.trim().length === 0 ||
+      postalCode.current.value.trim().length === 0 ||
+      city.current.value.trim().length === 0 ||
+      !email.current.value.includes("@")
+    ) {
+      return;
+    }
+    
     const order = {};
     order.items = mealsInOrder;
+
+    const data = {};
+    data.name = fullName.current.value
+    data.email = email.current.value
+    data.street = street.current.value
+    data['postal-code'] = postalCode.current.value
+    data.city = city.current.value
+
     order.customer = data;
 
     async function sendOrder(order) {
-      console.log("order: ", order)
+      console.log("order: ", order);
       try {
         const response = await fetch("http://localhost:3000/orders", {
           method: "POST",
-          body: JSON.stringify({order}),
-          headers: {  'Content-Type': 'application/json' },
+          body: JSON.stringify({ order }),
+          headers: { "Content-Type": "application/json" },
         });
         const responseData = await response.json();
         if (!response.ok) {
@@ -51,7 +69,7 @@ export default function OrderForm({
         onErrorAfterSubmit(`An error occured: ${error}`);
       }
     }
-    sendOrder(order)
+    sendOrder(order);
     console.log("Send http request");
     console.log("Receive response");
   }
@@ -62,7 +80,6 @@ export default function OrderForm({
       submitBtn="Submit Order"
       closeFn={closeOrder}
       submitFn={onSubmit}
-      submitDisabled={!dataIsReady}
     >
       <form>
         <h3>Checkout</h3>
@@ -70,8 +87,7 @@ export default function OrderForm({
         <div className="control">
           <label htmlFor="name">Full Name</label>
           <input
-            onChange={(event) => handleChange("name", event.target.value)}
-            value={data.name}
+            ref={fullName}
             type="text"
             id="name"
             name="name"
@@ -81,8 +97,7 @@ export default function OrderForm({
         <div className="control">
           <label htmlFor="email">E_Mail Address</label>
           <input
-            onChange={(event) => handleChange("email", event.target.value)}
-            value={data.email}
+            ref={email}
             type="email"
             id="email"
             name="email"
@@ -91,9 +106,8 @@ export default function OrderForm({
         </div>
         <div className="control">
           <label htmlFor="street">Street</label>
-          <input
-            onChange={(event) => handleChange("street", event.target.value)}
-            value={data.street}
+          <input       
+            ref={street}
             type="text"
             id="street"
             name="street"
@@ -104,10 +118,7 @@ export default function OrderForm({
           <div className="control">
             <label htmlFor="postal-code">Postal Code</label>
             <input
-              onChange={(event) =>
-                handleChange("postal-code", event.target.value)
-              }
-              value={data["postal-code"]}
+             ref={postalCode}
               type="text"
               id="postal-code"
               name="postal-code"
@@ -117,8 +128,7 @@ export default function OrderForm({
           <div className="control">
             <label htmlFor="city">City</label>
             <input
-              onChange={(event) => handleChange("city", event.target.value)}
-              value={data.city}
+              ref={city}
               type="text"
               id="city"
               name="city"
