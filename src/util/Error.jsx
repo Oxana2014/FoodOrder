@@ -13,7 +13,7 @@
 //   );
 // }
 
-import Modal from "../util/Modal";
+import Modal from "./Modal";
 
 export default function Error({message, onSubmit}) {
   return (

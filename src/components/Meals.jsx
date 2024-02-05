@@ -14,7 +14,7 @@ export default function Meals({ meals }) {
         <MealItem
           key={meal.id}
           id={meal.id}
-          image={mealPhoto}
+          image={meal.image}
           name={meal.name}
           description={meal.description}
           price={meal.price}

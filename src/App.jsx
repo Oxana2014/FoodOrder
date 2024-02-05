@@ -5,10 +5,9 @@ import Meals from "./components/Meals";
 import Cart from "./components/Cart";
 import OrderForm from "./components/OrderForm";
 import Feedback from "./components/Feedback";
-import CartContextProvider, { CartContext } from "./store/cart-context";
-import { useContext } from "react";
+import CartContextProvider from "./store/cart-context";
 import { useEffect } from "react";
-import Error from './components/Error'
+import Error from './util/Error'
 
 function App() {
   const [availableMeals, setAvailableMeals] = useState([]);
@@ -18,7 +17,7 @@ function App() {
   useEffect(() => {
   async function fetchMeals() {
     try {
-      const response = await fetch("http://localhost:3000/meal");
+      const response = await fetch("http://localhost:3000/meals");
       const responseData = await response.json();
 
       if (!response.ok) {
