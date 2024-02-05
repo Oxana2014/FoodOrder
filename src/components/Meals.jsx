@@ -1,7 +1,5 @@
 import { useContext } from "react";
 
-import mealPhoto from "../assets/beef-tacos.jpg";
-
 import MealItem from "./MealItem";
 import { CartContext } from "../store/cart-context";
 
@@ -14,7 +12,7 @@ export default function Meals({ meals }) {
         <MealItem
           key={meal.id}
           id={meal.id}
-          image={meal.image}
+          image={`http://localhost:3000/${meal.image}`}
           name={meal.name}
           description={meal.description}
           price={meal.price}
