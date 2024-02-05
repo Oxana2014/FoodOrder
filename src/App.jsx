@@ -13,7 +13,7 @@ import Error from './components/Error'
 function App() {
   const [availableMeals, setAvailableMeals] = useState([]);
   const [appState, setAppState] = useState(null);
- let errorMessage = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, beatae? Dignissimos rerum architecto odio libero ea nostrum eaque odit incidunt voluptatibus fugiat nam distinctio nihil molestiae, iusto, error repellat? Quas."
+  const [errorMessage, setErrorMessage]  = useState(null)
 
   useEffect(() => {
   async function fetchMeals() {
@@ -21,9 +21,9 @@ function App() {
       const response = await fetch("http://localhost:3000/meal");
       const responseData = await response.json();
 
-      // if (!response.ok) {
-      //   throw new Error("Can't fetch meals");
-      // }
+      if (!response.ok) {
+        throw new Error("Can't fetch meals");
+      }
       if(response.ok) {
         setAvailableMeals(responseData);
       }
@@ -45,7 +45,12 @@ function App() {
   }
   function handleError(errorMessage) {
     console.log("Error: ", errorMessage);
+    setErrorMessage(errorMessage)
     updateAppState("error");
+  }
+  function resetError() {
+    updateAppState(null);
+     setErrorMessage(null)
   }
 
   return (
@@ -77,7 +82,7 @@ function App() {
       )}
 
       {appState === 'error' && <Error 
-       message={errorMessage} onSubmit={() => updateAppState(null)}/> } 
+       message={errorMessage} onSubmit={resetError}/> } 
 
     </CartContextProvider>
   );
