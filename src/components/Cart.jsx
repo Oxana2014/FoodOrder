@@ -22,6 +22,7 @@ export default function Cart({ closeCart, submitCart }) {
       submitBtn="Go to Checkout"
       closeFn={closeCart}
       submitFn={submitCart}
+      visible={cartTotal !== 0}
     >
       <div className="cart">
         <h2>Your Cart</h2>
