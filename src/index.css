@@ -204,6 +204,14 @@ h1 {
   gap: 1rem;
 }
 
+.invalid label {
+  color: rgb(144, 6, 6);
+}
+.invalid input {
+  border-color: rgb(144, 4, 4);
+  background-color: #edc9c9;
+}
+
 .button {
   font: inherit;
   cursor: pointer;

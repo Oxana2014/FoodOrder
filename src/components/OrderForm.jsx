@@ -45,26 +45,15 @@ export default function OrderForm({
   );
 
   function onSubmit() {
-    // if (
-    //   fullName.current.value.trim().length === 0 ||
-    //   email.current.value.trim().length === 0 ||
-    //   street.current.value.trim().length === 0 ||
-    //   postalCode.current.value.trim().length === 0 ||
-    //   city.current.value.trim().length === 0 ||
-    //   !email.current.value.includes("@")
-    // ) {
-    //   return;
-    // }
-
-    const order = {};
+     const order = {};
     order.items = mealsInOrder;
 
     const data = {};
-    data.name = fullName.current.value;
-    data.email = email.current.value;
-    data.street = street.current.value;
-    data["postal-code"] = postalCode.current.value;
-    data.city = city.current.value;
+    data.name = customerState.name;
+    data.email = customerState.email;
+    data.street = customerState.street
+    data["postal-code"] = customerState["postal-code"]
+    data.city = customerState.city
 
     order.customer = data;
 
